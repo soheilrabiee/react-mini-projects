@@ -14,16 +14,16 @@ export default function App() {
     // using handle name shows that the function is an event handler
     // better to declare handlers outside of JSX and call them on event
     function handlePrevious() {
-        if (step > 1) setStep(step - 1);
+        if (step > 1) setStep((s) => s - 1);
     }
 
     function handleNext() {
-        if (step < 3) setStep(step + 1);
+        if (step < 3) setStep((s) => s + 1);
     }
 
     return (
         <>
-            <button className="close" onClick={() => setIsOpen(!isOpen)}>
+            <button className="close" onClick={() => setIsOpen((is) => !is)}>
                 &times;
             </button>
 
