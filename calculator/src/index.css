@@ -1,5 +1,6 @@
+/* Container */
 .app {
-    width: 320px;
+    width: 380px;
     margin: 40px auto;
     border-radius: 40px;
     overflow: hidden;
@@ -7,8 +8,10 @@
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    padding: 20px 0;
 }
 
+/* Display */
 .display {
     height: 120px;
     font-size: 56px;
@@ -16,35 +19,48 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     background: black;
     color: white;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
+/* Button Panel */
 .button-panel {
     display: flex;
     flex-direction: column;
 }
 
+/* Button Rows */
 .button-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
 
+/* Buttons */
 .button {
     font-size: 28px;
-    padding: 22px;
-    border: 1px solid #000;
+    height: 80px;
+    width: 80px;
+    margin: 6px;
+    border-radius: 50%;
+    border: none;
     cursor: pointer;
     outline: none;
-    transition: background 0.2s;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Button Press Effect */
 .button:active {
     opacity: 0.7;
+    transform: scale(0.95);
 }
 
-/* iOS-style colors */
+/* Colors */
 .button.grey {
     background: #a5a5a5;
     color: black;
@@ -60,9 +76,11 @@
     color: white;
 }
 
-/* Make 0 span two columns */
+/* 0 button (pill shape) */
 .button.zero {
     grid-column: span 2;
+    width: 172px; /* double width + margin */
+    border-radius: 40px; /* pill shape */
     text-align: left;
-    padding-left: 40px;
+    padding-left: 28px;
 }
