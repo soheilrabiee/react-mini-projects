@@ -1,9 +1,11 @@
 export default function App() {
-    return <div>Start</div>;
+    return <div className="app">Start</div>;
 }
 
 function Display() {}
 
-function Button() {}
+function Button() {
+    return <button></button>;
+}
 
 function ButtonPanel() {}

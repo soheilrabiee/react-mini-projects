@@ -1,13 +1,68 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.app {
+    width: 320px;
+    margin: 40px auto;
+    border-radius: 40px;
+    overflow: hidden;
+    background: black;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.display {
+    height: 120px;
+    font-size: 56px;
+    font-weight: 300;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 20px;
+    background: black;
+    color: white;
+}
+
+.button-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.button-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.button {
+    font-size: 28px;
+    padding: 22px;
+    border: 1px solid #000;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.2s;
+}
+
+.button:active {
+    opacity: 0.7;
+}
+
+/* iOS-style colors */
+.button.grey {
+    background: #a5a5a5;
+    color: black;
+}
+
+.button.dark {
+    background: #333333;
+    color: white;
+}
+
+.button.orange {
+    background: #ff9f0a;
+    color: white;
+}
+
+/* Make 0 span two columns */
+.button.zero {
+    grid-column: span 2;
+    text-align: left;
+    padding-left: 40px;
 }
