@@ -82,6 +82,8 @@ export default function App() {
                 <FormSplitBill
                     selectedFriend={selectedFriend}
                     onSplitBill={handleSplitBill}
+                    // Add key to reset the form state
+                    key={selectedFriend.id}
                 />
             )}
         </div>
