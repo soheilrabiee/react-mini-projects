@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { faker } from "@faker-js/faker";
 
 function createRandomPost() {
@@ -11,7 +11,7 @@ function createRandomPost() {
 // 1) CREATE A NEW CONTEXT
 const PostContext = createContext();
 
-function PostProvider() {
+function PostProvider({ children }) {
     const [posts, setPosts] = useState(() =>
         Array.from({ length: 30 }, () => createRandomPost())
     );
@@ -35,6 +35,7 @@ function PostProvider() {
         setPosts([]);
     }
 
+    // 2) PROVIDE VALUE TO THE CHILD COMPONENTS
     return (
         <PostContext.Provider
             value={{
@@ -44,8 +45,20 @@ function PostProvider() {
                 searchQuery,
                 setSearchQuery,
             }}
-        ></PostContext.Provider>
+        >
+            {children}
+        </PostContext.Provider>
     );
 }
 
-export { PostProvider, PostContext };
+function usePosts() {
+    const context = useContext(PostContext);
+
+    // When the context hook is used in a component which is not his children, the value is going to be UNDEFINED so we can prevent the usage and throw error
+    if (context === undefined)
+        throw new Error("PostContext was used outside of the post provider!");
+
+    return context;
+}
+
+export { PostProvider, usePosts };
