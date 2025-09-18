@@ -10,14 +10,14 @@ function Calculator({ workouts, allowSound }) {
     const [duration, setDuration] = useState(0);
 
     // Memoize the function to stop the effect to run on every render
-    const playSound = useCallback(
-        function () {
-            if (!allowSound) return;
-            const sound = new Audio(clickSound);
-            sound.play();
-        },
-        [allowSound]
-    );
+    // const playSound = useCallback(
+    //     function () {
+    //         if (!allowSound) return;
+    //         const sound = new Audio(clickSound);
+    //         sound.play();
+    //     },
+    //     [allowSound]
+    // );
 
     // Changing a state value based of other states
     useEffect(
@@ -25,10 +25,23 @@ function Calculator({ workouts, allowSound }) {
             setDuration(
                 (number * sets * speed) / 60 + (sets - 1) * durationBreak
             );
+        },
+        [number, sets, speed, durationBreak]
+    );
+
+    // Using effect instead of callback hook to play sound on duration changes
+    // And fix the reset bug (allow sound clicks)
+    useEffect(
+        function () {
+            const playSound = function () {
+                if (!allowSound) return;
+                const sound = new Audio(clickSound);
+                sound.play();
+            };
 
             playSound();
         },
-        [number, sets, speed, durationBreak, playSound]
+        [duration, allowSound]
     );
 
     // const duration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
@@ -37,12 +50,10 @@ function Calculator({ workouts, allowSound }) {
 
     function handleInc() {
         setDuration((duration) => Math.floor(duration) + 1);
-        playSound();
     }
 
     function handleDec() {
         setDuration((duration) => (duration > 1 ? Math.ceil(duration) - 1 : 0));
-        playSound();
     }
 
     return (
