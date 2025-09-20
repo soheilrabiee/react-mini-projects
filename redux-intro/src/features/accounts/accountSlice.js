@@ -13,6 +13,7 @@ const accountSlice = createSlice({
     reducers: {
         deposit(state, action) {
             state.balance += action.payload;
+            state.isLoading = false;
         },
         withdraw(state, action) {
             state.balance -= action.payload;
@@ -32,15 +33,37 @@ const accountSlice = createSlice({
                 state.balance += action.payload.amount;
             },
         },
-        payLoan(state, action) {
+        payLoan(state) {
             state.balance -= state.loan;
             state.loan = 0;
             state.loanPurpose = "";
         },
+        convertingCurrency(state) {
+            state.isLoading = true;
+        },
     },
 });
 
-export const { deposit, withdraw, requestLoan, payLoan } = accountSlice.actions;
+export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
+
+// The classic way of using thunk in the redux toolkit
+export function deposit(amount, currency) {
+    if (currency === "USD") return { type: "account/deposit", payload: amount };
+
+    return async function (dispatch, getState) {
+        // Thunk functions can have multiple dispatches
+        dispatch({ type: "account/convertingCurrency" });
+        // API call
+        const res = await fetch(
+            `https://api.frankfurter.dev/v1/latest?base=${currency}&symbols=USD`
+        );
+        const data = await res.json();
+        const converted = (amount * data.rates.USD).toFixed(2);
+
+        // return action
+        dispatch({ type: "account/deposit", payload: +converted });
+    };
+}
 
 export default accountSlice.reducer;
 
